@@ -1,7 +1,9 @@
 package com.example.elearner.controller;
 
 import com.example.elearner.dto.LoginDto;
+import com.example.elearner.dto.RefreshTokenDto;
 import com.example.elearner.dto.RegisterDto;
+import com.example.elearner.dto.TokenPairDto;
 import com.example.elearner.model.User;
 import com.example.elearner.security.jwt.JwtUtil;
 import com.example.elearner.service.impl.AuthenticationServiceImpl;
@@ -10,8 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,7 +27,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody RegisterDto registerUserDto) {
+    public ResponseEntity<?> register(@RequestBody RegisterDto registerUserDto) {
         User registeredUser = authenticationService.register(registerUserDto);
         return ResponseEntity.ok(registeredUser);
     }
@@ -35,10 +35,13 @@ public class AuthenticationController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         User authenticatedUser = authenticationService.login(loginDto);
-        String token = jwtUtil.generateToken(authenticatedUser);
-        return ResponseEntity.ok().body(Map.of(
-                "token", token,
-                "expiration", jwtUtil.getExpirationTime()
-        ));
+        TokenPairDto tokens = jwtUtil.generateTokenPair(authenticatedUser);
+        return ResponseEntity.ok(tokens);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenDto refreshTokenDto) {
+        TokenPairDto tokens = authenticationService.refreshToken(refreshTokenDto);
+        return ResponseEntity.ok(tokens);
     }
 }

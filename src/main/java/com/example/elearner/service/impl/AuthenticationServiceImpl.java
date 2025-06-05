@@ -1,9 +1,12 @@
 package com.example.elearner.service.impl;
 
 import com.example.elearner.dto.LoginDto;
+import com.example.elearner.dto.RefreshTokenDto;
 import com.example.elearner.dto.RegisterDto;
+import com.example.elearner.dto.TokenPairDto;
 import com.example.elearner.model.User;
 import com.example.elearner.repository.UserRepository;
+import com.example.elearner.security.jwt.JwtUtil;
 import com.example.elearner.service.AuthenticationService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,10 +22,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    private final JwtUtil jwtUtil;
+
+    public AuthenticationServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.jwtUtil = jwtUtil;
     }
 
     public User register(RegisterDto registerInput) {
@@ -45,6 +51,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
 
         return user;
+    }
+
+    public TokenPairDto refreshToken(RefreshTokenDto refreshTokenDto) {
+        String refreshToken = refreshTokenDto.getRefreshToken();
+        String username = jwtUtil.extractUsername(refreshToken);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        String accessToken = jwtUtil.generateAccessToken(user);
+
+        return new TokenPairDto(accessToken, refreshToken);
+
     }
 
 }

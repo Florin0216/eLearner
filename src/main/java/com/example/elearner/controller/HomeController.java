@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/elearner")
+@RequestMapping("/api")
 public class HomeController {
 
-    @GetMapping("/register")
+    @GetMapping("/home")
     public ResponseEntity<String> register(){
         return ResponseEntity.ok("Hello World");
     }
