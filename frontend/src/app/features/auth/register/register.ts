@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
 import {Router, RouterLink} from '@angular/router';
-import {Auth} from '../../../core/service/auth';
+import {Auth} from '../../../core/services/auth/auth';
 import {FormsModule} from '@angular/forms';
 
 @Component({

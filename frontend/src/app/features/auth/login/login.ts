@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NgOptimizedImage} from '@angular/common';
-import {Auth} from '../../../core/service/auth';
+import {Auth} from '../../../core/services/auth/auth';
 import {Router, RouterLink} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 
@@ -15,15 +15,18 @@ import {FormsModule} from '@angular/forms';
   styleUrl: './login.css'
 })
 export class Login {
-  credentials: any = { username: '', password: '' };
+  credentials: any = {username: '', password: ''};
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(private auth: Auth, private router: Router) {
+  }
 
   login() {
-    this.auth.login(this.credentials).subscribe(res => {
-      localStorage.setItem('jwt', res.accessToken);
-      this.router.navigate(['/home'])
-    });
+    this.auth.login(this.credentials)
+      .subscribe(res => {
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
+        this.router.navigate(['/home'])
+      });
   }
 
 }
