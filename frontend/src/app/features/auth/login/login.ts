@@ -25,7 +25,7 @@ export class Login {
       .subscribe(res => {
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
-        this.router.navigate(['/home'])
+        this.router.navigate(['/courses'])
       });
   }
 

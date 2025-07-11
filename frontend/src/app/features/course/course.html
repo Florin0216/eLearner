@@ -1,0 +1,9 @@
+<div class="course-list mt-3">
+  <div class="row row-cols-1 row-cols-lg-4 g-3">
+    @for (course of courses; track course.id) {
+      <div class="col">
+        <app-course-card [course]="course"></app-course-card>
+      </div>
+    }
+  </div>
+</div>
