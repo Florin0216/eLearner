@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import {Navbar} from '../../components/navbar/navbar';
 import {Sidebar} from '../../components/sidebar/sidebar';
 import {RouterOutlet} from '@angular/router';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'app-sidebar-content-layout',
   imports: [
     Navbar,
     Sidebar,
-    RouterOutlet
+    RouterOutlet,
   ],
   templateUrl: './sidebar-content-layout.html',
   styleUrl: './sidebar-content-layout.css'
 })
 export class SidebarContentLayout {
-
 }

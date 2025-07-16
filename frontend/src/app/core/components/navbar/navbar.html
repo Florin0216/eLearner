@@ -1,17 +1,26 @@
 <nav class="navbar navbar-expand-lg navbar-expand-md bg-body-tertiary">
   <div class="container-fluid d-flex align-items-start">
-    <a href="#" data-bs-target="#sidebar" data-bs-toggle="collapse" class="fs-3 pe-2 link-dark"><i class="bi bi-list bi-lg"></i></a>
-    <a class="navbar-brand" routerLink="/home">eLearner</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+    @if (auth.isAuthenticated()) {
+      <a data-bs-toggle="collapse" data-bs-target="#sidebar" aria-expanded="false"
+         aria-controls="sidebar" class="btn fs-3 ps-1 pe-2 pt-1 link-dark d-none d-md-block">
+        <i class="bi bi-list bi-lg"></i>
+      </a>
+    }
+    <a class="navbar-brand ps-3 fs-4" routerLink="/home"><img ngSrc="/site_icon.png" alt="Logo"
+                                                    width="30" height="30" class="d-inline-block align-text-top me-1">eLearner</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+    <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" id="offcanvasNavbar"
+         aria-labelledby="offcanvasNavbarLabel">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Menu</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 pt-2">
           @if (!(auth.isAuthenticated())) {
             <li class="nav-item">
               <a class="nav-link" routerLink="/login">Login</a>

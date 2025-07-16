@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import {Router, RouterLink, RouterModule} from '@angular/router';
+import {Component,} from '@angular/core';
+import {Router, RouterLink, } from '@angular/router';
 import {Auth} from '../../services/auth/auth';
+import {NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, NgOptimizedImage],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -17,4 +18,6 @@ export class Navbar {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
+
+
 }
