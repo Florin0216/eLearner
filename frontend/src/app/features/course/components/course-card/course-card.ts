@@ -1,10 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {NgOptimizedImage} from '@angular/common';
+import {CourseService} from '../../../../core/services/course/CourseService';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 
 @Component({
   selector: 'app-course-card',
   imports: [
-    NgOptimizedImage
+    NgOptimizedImage,
   ],
   templateUrl: './course-card.html',
   styleUrl: './course-card.css'
@@ -12,4 +13,14 @@ import {NgOptimizedImage} from '@angular/common';
 export class CourseCard {
   @Input() course: any;
 
+  constructor(private courseService: CourseService) { }
+
+  joinCourse(courseId: number): void {
+    this.courseService.joinCourse(courseId).subscribe(course => {
+    })
+  }
+
+  leaveCourse(courseId: number): void {
+    this.courseService.leaveCourse(courseId).subscribe(course => {})
+  }
 }

@@ -1,6 +1,10 @@
 <app-navbar></app-navbar>
 
-<div class="d-flex">
-    <app-sidebar class="d-none d-md-block"></app-sidebar>
+<div class="row">
+  <div class="col-auto col-md-auto col-xl-auto d-none d-md-block">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="col">
     <router-outlet></router-outlet>
+  </div>
 </div>
