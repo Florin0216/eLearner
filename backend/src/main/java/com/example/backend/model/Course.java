@@ -3,6 +3,7 @@ package com.example.backend.model;
 import com.example.backend.model.enums.Domain;
 import com.example.backend.model.enums.EducationalStage;
 import com.example.backend.model.enums.Grade;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,6 +47,7 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<Material> materials;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "courses")
     private Set<User> users;
 }

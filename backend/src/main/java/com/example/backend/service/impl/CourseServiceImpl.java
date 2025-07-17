@@ -6,6 +6,7 @@ import com.example.backend.repository.CourseRepository;
 import com.example.backend.repository.UserRepository;
 import com.example.backend.service.CourseService;
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -33,9 +34,9 @@ public class CourseServiceImpl implements CourseService {
          return courseRepository.save(course);
     }
 
-    public void addUserToCourse(Long courseId, Long userId) {
+    public void addUserToCourse(Long courseId, String username) {
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         course.getUsers().add(user);
         user.getCourses().add(course);
@@ -43,9 +44,9 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.save(course);
     }
 
-    public void removeUserFromCourse(Long courseId, Long userId) {
+    public void removeUserFromCourse(Long courseId, String username) {
         Course course = courseRepository.findById(courseId).orElseThrow(() -> new RuntimeException("Course not found"));
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         course.getUsers().remove(user);
         user.getCourses().remove(course);

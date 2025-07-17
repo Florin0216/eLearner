@@ -5,6 +5,7 @@ import com.example.backend.service.CourseService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -31,14 +32,14 @@ public class CourseController {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<?> joinCourse(@RequestParam Long courseId, @RequestParam Long userId) {
-        courseService.addUserToCourse(courseId, userId);
+    public ResponseEntity<?> joinCourse(@RequestParam Long courseId, Principal principal) {
+        courseService.addUserToCourse(courseId, principal.getName());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/leave")
-    public ResponseEntity<?> leaveCourse(@RequestParam Long courseId, @RequestParam Long userId) {
-        courseService.removeUserFromCourse(courseId, userId);
+    public ResponseEntity<?> leaveCourse(@RequestParam Long courseId, Principal principal) {
+        courseService.removeUserFromCourse(courseId, principal.getName());
         return ResponseEntity.ok().build();
     }
 

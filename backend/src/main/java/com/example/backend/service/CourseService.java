@@ -10,7 +10,7 @@ public interface CourseService {
 
     List<Course> findAllCourses();
 
-    void addUserToCourse(Long courseId, Long userId);
+    void addUserToCourse(Long courseId, String username);
 
-    void removeUserFromCourse(Long courseId, Long userId);
+    void removeUserFromCourse(Long courseId, String username);
 }
